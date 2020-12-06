@@ -1,29 +1,11 @@
 import React, {useEffect, useState} from "react";
 import tour from "../../../assets/logos/tour.svg"
+import getGames from "../../../actions/actions";
 
 const Content = () => {
     const [items, setItems] = useState([]);
     useEffect(() => {
-        setItems([
-            {
-                title: "Dota 2",
-                description: "Компьютерная многопользовательская командная игра в жанре MOBA",
-                points: "0.456",
-                presented: true
-            },
-            {
-                title: "Dota 2",
-                description: "Компьютерная многопользовательская командная игра в жанре MOBA",
-                points: "0.456",
-                presented: true
-            },
-            {
-                title: "Dota 2",
-                description: "Компьютерная многопользовательская командная игра в жанре MOBA",
-                points: "0.456",
-                presented: false
-            },
-        ])
+        getGames(setItems)
     }, [setItems])
 
     return (

@@ -8,6 +8,13 @@ async def handle(request):
     return web.Response(text=json.dumps(response_obj))
 
 
+async def options(request):
+    return web.Response(headers={
+        'Allow': 'OPTIONS, GET, HEAD',
+        "Access-Control-Allow-Origin": "*"
+    })
+
+
 async def get_games(request):
     response_obj = [
             {
@@ -29,15 +36,20 @@ async def get_games(request):
                 'presented': False,
             },
         ]
-    return web.Response(text=json.dumps(response_obj))
+    return web.Response(body=json.dumps(response_obj),
+                        headers={
+                            "Content-Type": "application/json",
+                            "Access-Control-Allow-Origin": "*"
+                        })
 
 
 def main():
     app = web.Application()
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
+    app.router.add_options('/games', options)
 
-    web.run_app(app, port=3010)
+    web.run_app(app, host='0.0.0.0', port=3010)
 
 
 if __name__ == '__main__':
