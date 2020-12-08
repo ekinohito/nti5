@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:3010';
 
 async function getGames(setItems) {
-    fetch("http://localhost:3010/games", {
+    fetch(`${API_URL}/games`, {
         "credentials": "omit",
         "headers": {
             "Accept": "text/html,application/xhtml+xml,application/json,application/xml;q=0.9,image/webp,*/*;q=0.8",
