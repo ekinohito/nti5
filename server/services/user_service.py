@@ -1,5 +1,6 @@
 from db_base import Session
-from models.user_model import User
+from models import User
+
 
 class UserService:
     @staticmethod

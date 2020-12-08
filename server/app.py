@@ -1,9 +1,8 @@
 from aiohttp import web
 import utils
 
-from db_base import Base, engine, Session
+from db_base import Base, engine
 from middlewares import auth_middleware
-from models.user_model import User
 from services import UserService
 
 from dotenv import load_dotenv
