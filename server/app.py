@@ -1,11 +1,18 @@
 from aiohttp import web
-from sqlalchemy import create_engine
-import json
+import utils
+
+from db_base import Base, engine, Session
+from middlewares import auth_middleware
+from models.user_model import User
+from services import UserService
+
+from dotenv import load_dotenv
+load_dotenv()
 
 
 async def handle(request):
     response_obj = {'status': 'success'}
-    return web.Response(text=json.dumps(response_obj))
+    return utils.json_response(response_obj)
 
 
 async def options(request):
@@ -36,18 +43,57 @@ async def get_games(request):
                 'presented': False,
             },
         ]
-    return web.Response(body=json.dumps(response_obj),
-                        headers={
-                            "Content-Type": "application/json",
-                            "Access-Control-Allow-Origin": "*"
-                        })
+    return utils.json_response(response_obj)
+
+
+async def register(request):
+    data = await request.json()
+
+    username, password = data['username'], data['password']
+
+    if UserService.get_user(username=username):
+        return utils.json_response({
+            "errors": [
+                {"username": "exists"}
+            ]
+        })
+
+    user = UserService.add_user(username, password)
+
+    return web.Response(text=utils.create_jwt_token(user.id))
+
+
+async def login(request):
+    data = await request.json()
+
+    username, password = data['username'], data['password']
+    user = UserService.get_user(username=username)
+
+    if not user:
+        return utils.json_response({
+            "errors": [
+                {"username": "not exists"}
+            ]
+        })
+    else:
+        if user.password == password:
+            return web.Response(text=utils.create_jwt_token(user.id))
+        return utils.json_response({
+            "errors": [
+                {"password": "incorrect"}
+            ]
+        })
 
 
 def main():
-    app = web.Application()
+    Base.metadata.create_all(bind=engine)
+
+    app = web.Application(middlewares=[auth_middleware])
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     app.router.add_options('/games', options)
+    app.router.add_post('/register', register)
+    app.router.add_post('/login', login)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 
