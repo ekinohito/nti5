@@ -4,11 +4,25 @@
   "desc": [
     {
       "mul": 0.1,
-      "method": "test"
+      "method": "fortnite.duo.matches"
     },
     {
       "mul": 0.25,
-      "method": "test"
+      "func": "max",
+      "desc": [
+        {
+          "mul": 0.9,
+          "method": "test"
+        },
+        {
+          "mul": 1,
+          "method": "test"
+        },
+        {
+          "mul": 0.95,
+          "method": "test"
+        }
+      ]
     },
     {
       "mul": 0.45,

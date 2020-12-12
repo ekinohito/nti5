@@ -2,6 +2,7 @@ import asyncio
 import json
 from typing import Callable, Any, Dict
 
+from server.methods.fortnite import Fortnite
 from server.methods.test_methods import TestMethods
 
 
@@ -41,7 +42,8 @@ class TreeDecoder(json.JSONDecoder):
     }
 
     methods = {
-        'test': TestMethods.test
+        'test': TestMethods.test,
+        'fortnite.duo.matches': Fortnite.request_duo_matches
     }
 
     def decode(self, s: str, _w: Callable[..., Any] = ...):
@@ -62,7 +64,7 @@ class TreeDecoder(json.JSONDecoder):
 def test():
     with open('test_tree.json') as f:
         ioloop = asyncio.get_event_loop()
-        res = ioloop.run_until_complete(json.load(f, cls=TreeDecoder).evaluate({}))
+        res = ioloop.run_until_complete(json.load(f, cls=TreeDecoder).evaluate({"fortnite-name": "100"}))
         ioloop.close()
         return res
 
