@@ -1,0 +1,18 @@
+{
+  "mul": 100,
+  "func": "sum",
+  "desc": [
+    {
+      "mul": 0.1,
+      "method": "test"
+    },
+    {
+      "mul": 0.25,
+      "method": "test"
+    },
+    {
+      "mul": 0.45,
+      "method": "test"
+    }
+  ]
+}
