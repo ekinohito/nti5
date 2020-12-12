@@ -12,7 +12,7 @@ const Content = () => {
         <div className="main-content p-3">
             {
                 items.map((value, index) => (
-                    <div className={`container row align-items-center main-item p-5 m-3 ${value.presented?"blue":"red"}`} key={index}>
+                    <div className={`container row align-items-center main-item p-5 m-3 ${value.presented ? "blue":"red"}`} key={index}>
                         <div className="col main-item-title mb-2">
                             {value.title}
                         </div>

@@ -1,3 +1,4 @@
+import aiohttp_cors
 from aiohttp import web
 import utils
 
@@ -90,9 +91,13 @@ def main():
     app = web.Application(middlewares=[auth_middleware])
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
-    app.router.add_options('/games', options)
+    # app.router.add_options('/games', options)
     app.router.add_post('/register', register)
     app.router.add_post('/login', login)
+
+    cors = aiohttp_cors.setup(app)
+    for route in app.router.routes():
+        cors.add(route)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 

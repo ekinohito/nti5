@@ -8,10 +8,6 @@ from aiohttp import web
 def json_response(body='', **kwargs):
     kwargs['body'] = json.dumps(body or kwargs['body']).encode('utf-8')
     kwargs['content_type'] = 'text/json'
-    kwargs['headers'] = {
-        **kwargs.get('headers', {}),
-        "Access-Control-Allow-Origin": "*"
-    }
     return web.Response(**kwargs)
 
 
