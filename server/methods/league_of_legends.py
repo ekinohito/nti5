@@ -25,19 +25,27 @@ class LolMatchStats:
 
 
 class LeagueOfLegends:
-    api_url = ''
+    _api_url = ''
+    _summoner_id: int
+    stats: List[LolMatchStats]
 
-    @staticmethod
-    async def get_account_id(summoner_name) -> int:
-        url = f'{LeagueOfLegends.api_url}/lol/summoner/v4/summoners/by-name/{summoner_name}'
+    async def init(self, summoner_id: int = None, summoner_name: str = None):
+        if summoner_id and not summoner_name:
+            self._summoner_id = summoner_id
+        elif not summoner_id and summoner_name:
+            self._summoner_id = await self._get_account_id(summoner_name)
+
+        self.stats = await self._get_games_stats()
+
+    async def _get_account_id(self, summoner_name) -> int:
+        url = f'{self._api_url}/lol/summoner/v4/summoners/by-name/{summoner_name}'
         async with ClientSession as session:
             async with session.get(url) as response:
                 return (await response.json())['accountId']
 
-    @staticmethod
-    async def get_games_stats(account_id, count=20) -> List[LolMatchStats]:
-        matches_url = f'{LeagueOfLegends.api_url}/lol/match/v4/matchlists/by-account/{account_id}'
-        match_url = f'{LeagueOfLegends.api_url}/lol/match/v4/matches/%d'
+    async def _get_games_stats(self, count=20) -> List[LolMatchStats]:
+        matches_url = f'{self._api_url}/lol/match/v4/matchlists/by-account/{self._summoner_id}'
+        match_url = f'{self._api_url}/lol/match/v4/matches/%d'
         async with ClientSession as session:
             game_duration: int
 
@@ -51,6 +59,6 @@ class LeagueOfLegends:
             for i in match_ids:
                 async with session.get(match_url % i) as response:
                     match_stats.append(
-                        LolMatchStats([i for i in (await response.json())['participants'] if i['participantId'] == account_id][0], game_duration)
+                        LolMatchStats([i for i in (await response.json())['participants'] if i['participantId'] == self._summoner_id][0], game_duration)
                     )
             return match_stats
