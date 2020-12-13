@@ -1,3 +1,80 @@
 {
-
+  "title": "root",
+  "mul": 1,
+  "func": "max",
+  "desc": [
+    {
+      "title": "fortnite",
+      "mul": 1,
+      "func": "sum",
+      "desc": [
+        {
+          "title": "duo",
+          "mul": 0.25,
+          "func": "sum",
+          "desc": [
+            {
+              "title": "wins",
+              "mul": 0.5,
+              "method": "fortnite.duo.wins"
+            },
+            {
+              "title": "top5",
+              "mul": 0.25,
+              "method": "fortnite.duo.top5"
+            },
+            {
+              "title": "top12",
+              "mul": 0.25,
+              "method": "fortnite.duo.top12"
+            }
+          ]
+        },
+        {
+          "title": "trio",
+          "mul": 0.35,
+          "func": "sum",
+          "desc": [
+            {
+              "title": "wins",
+              "mul": 0.5,
+              "method": "fortnite.trio.wins"
+            },
+            {
+              "title": "top3",
+              "mul": 0.25,
+              "method": "fortnite.trio.top3"
+            },
+            {
+              "title": "top6",
+              "mul": 0.25,
+              "method": "fortnite.trio.top6"
+            }
+          ]
+        },
+        {
+          "title": "squad",
+          "mul": 0.40,
+          "func": "sum",
+          "desc": [
+            {
+              "title": "wins",
+              "mul": 0.5,
+              "method": "fortnite.squad.wins"
+            },
+            {
+              "title": "top3",
+              "mul": 0.25,
+              "method": "fortnite.squad.top3"
+            },
+            {
+              "title": "top6",
+              "mul": 0.25,
+              "method": "fortnite.squad.top6"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

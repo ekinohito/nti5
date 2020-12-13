@@ -7,18 +7,20 @@ from server.methods.test_methods import TestMethods
 
 
 class TreeNode:
-    def __init__(self, mul):
+    def __init__(self, mul, title=''):
         self.mul = mul
+        self.title = title
 
     async def evaluate(self, user):
         return self.mul
 
 
 class Branch(TreeNode):
-    def __init__(self, mul, desc, func):
+    def __init__(self, mul, desc, func, title=''):
         super(Branch, self).__init__(mul)
         self.desc = desc
         self.func = func
+        self.title = title
 
     async def evaluate(self, user):
         tasks = [asyncio.ensure_future(x.evaluate(user)) for x in self.desc]
@@ -27,9 +29,10 @@ class Branch(TreeNode):
 
 
 class Leaf(TreeNode):
-    def __init__(self, mul, method):
+    def __init__(self, mul, method, title=''):
         super(Leaf, self).__init__(mul)
         self.method = method
+        self.title = title
 
     async def evaluate(self, user):
         return self.mul * await self.method(user)
@@ -40,10 +43,18 @@ class TreeDecoder(json.JSONDecoder):
         'max': max,
         'sum': sum
     }
-
+    fortnite = Fortnite()
     methods = {
         'test': TestMethods.test,
-        'fortnite.duo.matches': Fortnite.request_duo_matches
+        'fortnite.duo.wins': fortnite.request_duo_wins,
+        'fortnite.duo.top5': fortnite.request_duo_top5,
+        'fortnite.duo.top12': fortnite.request_duo_top12,
+        'fortnite.trio.wins': fortnite.request_trio_wins,
+        'fortnite.trio.top3': fortnite.request_trio_top3,
+        'fortnite.trio.top6': fortnite.request_trio_top6,
+        'fortnite.squad.wins': fortnite.request_squad_wins,
+        'fortnite.squad.top3': fortnite.request_squad_top3,
+        'fortnite.squad.top6': fortnite.request_squad_top6,
     }
 
     def decode(self, s: str, _w: Callable[..., Any] = ...):
