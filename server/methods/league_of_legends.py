@@ -3,7 +3,7 @@ from typing import List
 from aiohttp import ClientSession
 
 
-class MatchStats:
+class LolMatchStats:
     dmg_taken: int
     cc_dealt: int
     dmg_dealt: int
@@ -35,7 +35,7 @@ class LeagueOfLegends:
                 return (await response.json())['accountId']
 
     @staticmethod
-    async def get_games_stats(account_id, count=20) -> List[MatchStats]:
+    async def get_games_stats(account_id, count=20) -> List[LolMatchStats]:
         matches_url = f'{LeagueOfLegends.api_url}/lol/match/v4/matchlists/by-account/{account_id}'
         match_url = f'{LeagueOfLegends.api_url}/lol/match/v4/matches/%d'
         async with ClientSession as session:
@@ -47,10 +47,10 @@ class LeagueOfLegends:
                 game_duration = json['gameDuration']
                 match_ids = [i['gameId'] for i in json['matches']][:count]
 
-            match_stats: List[MatchStats] = []
+            match_stats: List[LolMatchStats] = []
             for i in match_ids:
                 async with session.get(match_url % i) as response:
                     match_stats.append(
-                        MatchStats([i for i in (await response.json())['participants'] if i['participantId'] == account_id][0], game_duration)
+                        LolMatchStats([i for i in (await response.json())['participants'] if i['participantId'] == account_id][0], game_duration)
                     )
             return match_stats
