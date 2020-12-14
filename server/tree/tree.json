@@ -4,6 +4,63 @@
   "func": "max",
   "desc": [
     {
+      "title": "csgo",
+      "mul": 1,
+      "func": "sum",
+      "desc": [
+        {
+          "title": "block_1",
+          "mul": 0.3,
+          "func": "sum",
+          "desc": [
+            {
+              "title": "matches_winrate",
+              "mul": 1,
+              "method": "csgo.matches_winrate"
+            }
+          ]
+        },
+        {
+          "title": "block_2",
+          "mul": 0.15,
+          "func": "sum",
+          "desc": [
+            {
+              "title": "rounds_winrate",
+              "mul": 0.5,
+              "method": "csgo.rounds_winrate"
+            },
+            {
+              "title": "avg_round_per_match",
+              "mul": 0.2,
+              "method": "csgo.avg_round_per_match"
+            },
+            {
+              "title": "avg_won_round_per_match",
+              "mul": 0.3,
+              "method": "csgo.avg_won_round_per_match"
+            }
+          ]
+        },
+        {
+          "title": "total_mvps",
+          "mul": 0.15,
+          "method": "csgo.total_mvps"
+        },
+        {
+          "title": "total_weapons_donated",
+          "mul": 0.1,
+          "method": "csgo.total_weapons_donated"
+        },
+        {
+          "title": "total_matches_won",
+          "mul": 0.3,
+          "method": "total_matches_won"
+        }
+      ]
+    },
+
+    {
       "title": "fortnite",
       "mul": 1,
       "func": "sum",
