@@ -31,3 +31,12 @@ class UserService:
 
         session.close()
         return user
+
+    @staticmethod
+    def update_games(user_id: int, **kwargs) -> User:
+        session = Session()
+        user = session.query(User).filter(User.id.is_(user_id)).first()
+        for key, value in kwargs.items():
+            setattr(user.games, key, value)
+        session.commit()
+        session.close()
