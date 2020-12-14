@@ -1,4 +1,4 @@
-from league_of_legends import LeagueOfLegends
+from methods import LeagueOfLegends
 import asyncio
 
 from dotenv import load_dotenv

@@ -26,7 +26,7 @@ class LolMatchStats:
         if stats['deaths']:
             self.kda = (stats['kills'] + stats['assists']) / stats['deaths']
         else:
-            self.kda = 1000
+            self.kda = 228
         self.role = role
 
 

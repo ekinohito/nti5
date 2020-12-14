@@ -3,6 +3,7 @@ import json
 from typing import Callable, Any, Dict
 
 from server.methods.fortnite import Fortnite
+from server.methods.csgo import Csgo
 from server.methods.test_methods import TestMethods
 
 
@@ -44,6 +45,7 @@ class TreeDecoder(json.JSONDecoder):
         'sum': sum
     }
     fortnite = Fortnite()
+    csgo = Csgo()
     methods = {
         'test': TestMethods.test,
         'fortnite.duo.wins': fortnite.request_duo_wins,
@@ -55,6 +57,18 @@ class TreeDecoder(json.JSONDecoder):
         'fortnite.squad.wins': fortnite.request_squad_wins,
         'fortnite.squad.top3': fortnite.request_squad_top3,
         'fortnite.squad.top6': fortnite.request_squad_top6,
+            
+        'csgo.total_time_played': csgo.request_total_time_played,
+        'csgo.total_wins': csgo.request_total_wins,
+        'csgo.total_rounds_played': csgo.request_total_rounds_played,
+        'csgo.total_mvps': csgo.request_total_mvps,
+        'csgo.total_matches_won': csgo.request_total_matches_won,
+        'csgo.total_matches_played': csgo.request_total_matches_played,
+        'csgo.total_weapons_donated': csgo.request_total_weapons_donated,
+        'csgo.matches_winrate': csgo.request_matches_winrate,
+        'csgo.rounds_winrate': csgo.request_rounds_winrate,
+        'csgo.avg_round_per_match': csgo.request_avg_round_per_match,
+        'csgo.avg_won_round_per_match': csgo.request_avg_won_round_per_match,
     }
 
     def decode(self, s: str, _w: Callable[..., Any] = ...):
