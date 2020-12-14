@@ -10,7 +10,7 @@ class Games(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     lol_nickname = Column(String)
-    lol_account_id = Column(Integer)
+    lol_account_id = Column(String)
 
     steam_id = Column(Integer)
 
