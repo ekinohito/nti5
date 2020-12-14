@@ -48,8 +48,9 @@ class Csgo:
     def __init__(self):
         # self.api_key = open(PATH_TO_STEAMAPI_KEY, mode="r").read()
         self.api_key = os.getenv("STEAM_API_KEY")
-        self.api_url = f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={self.api_key}&steamid="
-		
+        self.api_url = f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/" \
+                       f"?appid=730&key={self.api_key}&steamid="
+
         self.stats = {
             "total_time_played": 0,
             "total_wins": 0,
