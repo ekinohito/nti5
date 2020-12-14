@@ -12,6 +12,8 @@ class Games(Base):
     lol_nickname = Column(String)
     lol_account_id = Column(Integer)
 
+    steam_id = Column(Integer)
+
     user = relationship('User', back_populates="games", uselist=False)
 
 

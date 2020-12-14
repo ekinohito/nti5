@@ -92,10 +92,13 @@ async def set_games_name(request):
     game_name = request.match_info.get('game_name')
 
     data = await request.json()
+    payload = data["payload"]
     if game_name == 'lol':
-        account_id = (await LeagueOfLegends().init(summoner_name=data["name"])).account_id
-        UserService.update_games(request.user.id, lol_account_id=account_id, lol_nickname=data['name'])
+        account_id = (await LeagueOfLegends().init(summoner_name=payload)).account_id
+        UserService.update_games(request.user.id, lol_account_id=account_id, lol_nickname=payload)
         return web.Response(status=200)
+    elif game_name == 'csgo':
+        UserService.update_games(request.user.id, steam_id=payload)
 
 
 def main():
