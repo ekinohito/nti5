@@ -2,6 +2,9 @@ import asyncio
 import time
 import os
 from typing import Dict, Union
+import logging as log
+
+log.basicConfig(level="ERROR")
 
 from aiohttp import ClientSession
 
@@ -46,8 +49,8 @@ PATH_TO_STEAMAPI_KEY = "steam_api_key.txt"
 class Csgo:
 
     def __init__(self):
-        # self.api_key = open(PATH_TO_STEAMAPI_KEY, mode="r").read()
-        self.api_key = os.getenv("STEAM_API_KEY")
+        self.api_key = open(PATH_TO_STEAMAPI_KEY, mode="r").read()
+        # self.api_key = os.getenv("STEAM_API_KEY")
         self.api_url = f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/" \
                        f"?appid=730&key={self.api_key}&steamid="
 
@@ -80,7 +83,11 @@ class Csgo:
 
     async def csgo_request(self, stat_name, user):
         d = await self.fetch_to_cache(user["steamid64"])
-        self.stats[stat_name] = d["playerstats"]["stats"][stat_name]
+        log.debug(f"KEK: {stat_name}: {d}")
+        for stat in d["playerstats"]["stats"]:
+            if stat["name"] == stat_name:
+                self.stats[stat_name] = stat["value"]
+                break
         return self.stats[stat_name]
 
 
