@@ -15,8 +15,8 @@ PATH_TO_STEAMAPI_KEY = "steam_api_key.txt"
 class Payday2:
 
     def __init__(self):
-        self.api_key = open(PATH_TO_STEAMAPI_KEY, mode="r").read()
-        # self.api_key = os.getenv("STEAM_API_KEY")
+        # self.api_key = open(PATH_TO_STEAMAPI_KEY, mode="r").read()
+        self.api_key = os.getenv("STEAM_API_KEY")
         self.api_url = f"http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/" \
                        f"?appid=218620&key={self.api_key}&steamid="
 
