@@ -3,6 +3,7 @@ from aiohttp import web
 import utils
 
 from db_base import Base, engine
+from methods import LeagueOfLegends
 from middlewares import auth_middleware
 from services import UserService
 
@@ -85,6 +86,21 @@ async def login(request):
         })
 
 
+async def set_games_name(request):
+    if not request.user:
+        return web.Response(status=401)
+    game_name = request.match_info.get('game_name')
+
+    data = await request.json()
+    payload = data["payload"]
+    if game_name == 'lol':
+        account_id = (await LeagueOfLegends().init(summoner_name=payload)).account_id
+        UserService.update_games(request.user.id, lol_account_id=account_id, lol_nickname=payload)
+        return web.Response(status=200)
+    elif game_name == 'csgo':
+        UserService.update_games(request.user.id, steam_id=payload)
+
+
 def main():
     Base.metadata.create_all(bind=engine)
 
@@ -92,8 +108,9 @@ def main():
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     # app.router.add_options('/games', options)
-    app.router.add_post('/register', register)
-    app.router.add_post('/login', login)
+    app.router.add_post('/user/register', register)
+    app.router.add_post('/user/login', login)
+    app.router.add_post('/games/{game_name}/name', set_games_name)
 
     cors = aiohttp_cors.setup(app)
     for route in app.router.routes():

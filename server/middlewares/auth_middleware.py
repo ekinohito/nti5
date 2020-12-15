@@ -9,9 +9,11 @@ from services import UserService
 async def auth_middleware(app, handler):
     async def middleware(request):
         request.user = None
-        jwt_token = request.headers.get('authorization', None)
-        if jwt_token:
+        authorization = request.headers.get('authorization', None)
+        print(authorization)
+        if authorization:
             try:
+                jwt_token = authorization.split()[1]
                 payload = jwt.decode(jwt_token, os.getenv('JWT_SECRET'),
                                      algorithms=[os.getenv('JWT_ALGORITHM')])
             except (jwt.DecodeError, jwt.ExpiredSignatureError):

@@ -32,15 +32,15 @@ class LolMatchStats:
 
 class LeagueOfLegends:
     _api_url: str
-    _account_id: int
+    account_id: int
     stats: List[LolMatchStats]
 
     async def init(self, summoner_id: int = None, summoner_name: str = None):
         self._api_url = f'https://euw1.api.riotgames.com%s?api_key={os.getenv("LOL_API_KEY")}'
         if summoner_id and not summoner_name:
-            self._account_id = summoner_id
+            self.account_id = summoner_id
         elif not summoner_id and summoner_name:
-            self._account_id = await self._get_account_id(summoner_name)
+            self.account_id = await self._get_account_id(summoner_name)
         return self
 
     async def stats_to_cache(self):
@@ -53,7 +53,7 @@ class LeagueOfLegends:
                 return (await response.json())['accountId']
 
     async def _get_games_stats(self, count=20) -> List[LolMatchStats]:
-        matches_url = self._api_url % f'/lol/match/v4/matchlists/by-account/{self._account_id}'
+        matches_url = self._api_url % f'/lol/match/v4/matchlists/by-account/{self.account_id}'
         match_url = self._api_url % '/lol/match/v4/matches/%d'
         async with ClientSession() as session:
             matches: list
@@ -68,7 +68,7 @@ class LeagueOfLegends:
                     k += 1
                     print(k)
                     json = await response.json()
-                    participant_id = [i['participantId'] for i in json['participantIdentities'] if i['player']['accountId'] == self._account_id][0]
+                    participant_id = [i['participantId'] for i in json['participantIdentities'] if i['player']['accountId'] == self.account_id][0]
 
                     game_duration = json['gameDuration']
                     match_stats.append(
