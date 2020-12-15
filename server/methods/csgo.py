@@ -79,8 +79,8 @@ class Csgo:
 
 
     async def csgo_request(self, stat_name, user):
-        d = await self.fetch_to_cache(user["csgo-steamid64"])
-        self.stats[stat_name] = d["playerstats"][stat_name]
+        d = await self.fetch_to_cache(user["steamid64"])
+        self.stats[stat_name] = d["playerstats"]["stats"][stat_name]
         return self.stats[stat_name]
 
 

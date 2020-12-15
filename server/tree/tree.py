@@ -4,6 +4,7 @@ from typing import Callable, Any, Dict
 
 from server.methods.fortnite import Fortnite
 from server.methods.csgo import Csgo
+from server.methods.payday2 import Payday2
 from server.methods.test_methods import TestMethods
 
 
@@ -46,6 +47,7 @@ class TreeDecoder(json.JSONDecoder):
     }
     fortnite = Fortnite()
     csgo = Csgo()
+    payday2 = Payday2()
     methods = {
         'test': TestMethods.test,
         'fortnite.duo.wins': fortnite.request_duo_wins,
@@ -69,6 +71,15 @@ class TreeDecoder(json.JSONDecoder):
         'csgo.rounds_winrate': csgo.request_rounds_winrate,
         'csgo.avg_round_per_match': csgo.request_avg_round_per_match,
         'csgo.avg_won_round_per_match': csgo.request_avg_won_round_per_match,
+
+        'payday2.heist_success': payday2.request_heist_success,
+        'payday2.heist_failed': payday2.request_heist_failed,
+        'payday2.player_level': payday2.request_player_level,
+        'payday2.player_coins': payday2.request_player_coins,
+        'payday2.difficulty_bonus': payday2.request_difficulty_bonus,
+        'payday2.job_help': payday2.request_job_help,
+        'payday2.heist_winrate': payday2.request_heist_winrate,
+        'payday2.level_help': payday2.request_level_help,
     }
 
     def decode(self, s: str, _w: Callable[..., Any] = ...):
@@ -89,7 +100,7 @@ class TreeDecoder(json.JSONDecoder):
 def test():
     with open('test_tree.json') as f:
         ioloop = asyncio.get_event_loop()
-        res = ioloop.run_until_complete(json.load(f, cls=TreeDecoder).evaluate({"fortnite-name": "100"}))
+        res = ioloop.run_until_complete(json.load(f, cls=TreeDecoder).evaluate({"fortnite-name": "100", "steamid64": "76561198123339395"}))
         ioloop.close()
         return res
 

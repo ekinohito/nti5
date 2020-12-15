@@ -61,6 +61,49 @@
     },
 
     {
+      "title": "payday2",
+      "mul": 1,
+      "func": "sum",
+      "desc": [
+        {
+          "title": "heist_success",
+          "mul": 0.3,
+          "method": "payday2.heist_success"
+        },
+        {
+          "title": "heist_winrate",
+          "mul": 0.3,
+          "method": "payday2.heist_winrate"
+        },
+        {
+          "title": "player_level",
+          "mul": 0.1,
+          "method": "payday2.player_level"
+        },
+        {
+          "title": "player_coins",
+          "mul": 0.1,
+          "method": "payday2.player_coins"
+        },
+        {
+          "title": "difficulty_bonus",
+          "mul": 0.1,
+          "method": "payday2.difficulty_bonus"
+        },
+        {
+          "title": "job_help",
+          "mul": 0.05,
+          "method": "payday2.job_help"
+        },
+        {
+          "title": "level_help",
+          "mul": 0.05,
+          "method": "payday2.level_help"
+        }
+      ]
+    },
+
+    {
       "title": "fortnite",
       "mul": 1,
       "func": "sum",
