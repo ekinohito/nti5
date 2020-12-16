@@ -14,4 +14,4 @@ async function getGames(setItems) {
         .then(data => setItems(data));
 }
 
-export default getGames;
+export {getGames};

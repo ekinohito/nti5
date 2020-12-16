@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import tour from "../../../assets/logos/tour.svg"
-import getGames from "../../../actions/actions";
+import {getGames} from "../../../actions";
 
 const Content = () => {
     const [items, setItems] = useState([]);
