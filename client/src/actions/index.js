@@ -1,17 +1,16 @@
-const API_URL = 'http://localhost:3010';
+export const SET_GAMES = 'SET_GAMES';
 
-async function getGames(setItems) {
-    fetch(`${API_URL}/games`, {
-        "credentials": "omit",
-        "headers": {
-            "Accept": "text/html,application/xhtml+xml,application/json,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Accept-Language": "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3",
-        },
-        "method": "GET",
-        "mode": "cors"
-    })
-        .then(res => res.json())
-        .then(data => setItems(data));
+const setGames = games => {
+    return {
+        type: SET_GAMES,
+        payload: games
+    }
 }
 
-export {getGames};
+const API_URL = 'http://localhost:3010';
+
+export const fetchGames = () => dispatch => {
+    fetch(`${API_URL}/games`)
+        .then(res => res.json())
+        .then(data => dispatch(setGames(data)));
+}

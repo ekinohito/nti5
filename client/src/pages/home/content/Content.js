@@ -1,17 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import tour from "../../../assets/logos/tour.svg"
-import {getGames} from "../../../actions";
+import {fetchGames} from "../../../actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const Content = () => {
-    const [items, setItems] = useState([]);
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        getGames(setItems)
-    }, [setItems])
+        dispatch(fetchGames())
+    }, [dispatch]);
+
+    const games = useSelector(state => state.games)
 
     return (
         <div className="main-content p-3">
             {
-                items.map((value, index) => (
+                games.map((value, index) => (
                     <div className={`container row align-items-center main-item p-5 m-3 ${value.presented ? "blue":"red"}`} key={index}>
                         <div className="col main-item-title mb-2">
                             {value.title}
