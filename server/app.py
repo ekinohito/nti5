@@ -100,7 +100,10 @@ async def login(request):
 
 
 async def get_user(request):
-    return utils.json_response(request.user)
+    return utils.json_response({
+        'username': request.user.username,
+        'lol_nickname': request.user.lol_nickname
+    })
 
 
 async def set_games_name(request):
