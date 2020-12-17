@@ -31,7 +31,7 @@ class MaxService:
         return maximum
 
     @staticmethod
-    def update_maximum(id: int = None, title: str = None, value: str) -> Maximum:
+    def update_maximum(value: str, id: int = None, title: str = None, ) -> Maximum:
         session = Session()
 
         maximum: Maximum = None
