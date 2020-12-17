@@ -32,6 +32,7 @@ async def options(request):
 
 
 async def get_games(request):
+    print(request.user)
 
     user = dict()
     if request.user.fortnite_nickname is not None:
