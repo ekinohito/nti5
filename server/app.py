@@ -1,7 +1,7 @@
 import asyncio
 import json
 
-import aiohttp_cors
+from aiohttp_middlewares import cors_middleware
 from aiohttp import web
 import utils
 
@@ -12,7 +12,7 @@ from services import UserService
 
 from dotenv import load_dotenv
 
-from server.tree.tree import TreeDecoder
+from tree.tree import TreeDecoder
 
 load_dotenv()
 
@@ -98,7 +98,10 @@ async def login(request):
 
 
 async def get_user(request):
-    return utils.json_response(request.user)
+    return utils.json_response({
+        'username': request.user.username,
+        'lol_nickname': request.user.lol_nickname
+    })
 
 
 async def set_games_name(request):
@@ -119,7 +122,7 @@ async def set_games_name(request):
 def main():
     Base.metadata.create_all(bind=engine)
 
-    app = web.Application(middlewares=[auth_middleware])
+    app = web.Application(middlewares=[cors_middleware(origins=['http://localhost:3000']), auth_middleware])
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     # app.router.add_options('/games', options)
@@ -127,10 +130,6 @@ def main():
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
-
-    cors = aiohttp_cors.setup(app)
-    for route in app.router.routes():
-        cors.add(route)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 

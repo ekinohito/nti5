@@ -1,5 +1,5 @@
 from db_base import Session
-from models import User, Games
+from models import User
 
 
 class UserService:
@@ -10,7 +10,6 @@ class UserService:
 
         username = username.lower()
         user = User(username, password)
-        games = Games(user=user)
         session.add(user)
 
         session.commit()
@@ -37,6 +36,7 @@ class UserService:
         session = Session()
         user = session.query(User).filter(User.id.is_(user_id)).first()
         for key, value in kwargs.items():
-            setattr(user.games, key, value)
+            setattr(user, key, value)
         session.commit()
         session.close()
+        return user

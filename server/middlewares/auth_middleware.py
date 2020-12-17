@@ -20,7 +20,6 @@ async def auth_middleware(app, handler):
                 return json_response({'message': 'Token is invalid'}, status=400)
 
             user = UserService.get_user(payload['user_id'])
-
             request.user = user
         return await handler(request)
     return middleware

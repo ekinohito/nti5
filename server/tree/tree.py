@@ -2,10 +2,10 @@ import asyncio
 import json
 from typing import Callable, Any, Dict
 
-from server.methods.fortnite import Fortnite
-from server.methods.csgo import Csgo
-from server.methods.payday2 import Payday2
-from server.methods.test_methods import TestMethods
+from methods.fortnite import Fortnite
+from methods.csgo import Csgo
+from methods.payday2 import Payday2
+from methods.test_methods import TestMethods
 
 
 class TreeNode:
