@@ -12,7 +12,7 @@ from services import UserService
 
 from dotenv import load_dotenv
 
-from server.tree.tree import TreeDecoder
+from tree.tree import TreeDecoder
 
 load_dotenv()
 
@@ -127,7 +127,6 @@ def main():
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
-
 
     web.run_app(app, host='0.0.0.0', port=3010)
 
