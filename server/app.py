@@ -36,16 +36,18 @@ async def get_games(request):
 
     response_obj = [
             {
-                'title': "Dota 2",
-                'description': "Компьютерная многопользовательская командная игра в жанре MOBA",
+                'title': "League of Legends ",
+                'description': "Cтратегическая кооперативная игра, в которой две команды из пяти могущественных чемпионов сражаются друг с другом, пытаясь уничтожить вражескую базу",
                 'points': "0.456",
                 'presented': True,
+                'auth': "/lol_auth"
             },
             {
                 'title': "CS:GO",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
                 'points': "0.567",
                 'presented': False,
+                'auth': "/csgo_auth"
             },
             {
                 'title': "Fortnite",
@@ -53,6 +55,13 @@ async def get_games(request):
                 'points': await tree.desc[2].evaluate({"fortnite-name": "100"}),
                 'presented': True,
                 'auth': "/fortnite_auth"
+            },
+            {
+                'title': "Payday 2",
+                'description': "Компьютерная многопользовательская командная игра в жанре FPS",
+                'points': "0.567",
+                'presented': False,
+                'auth': "/pd2_auth"
             },
         ]
     return utils.json_response(response_obj)
