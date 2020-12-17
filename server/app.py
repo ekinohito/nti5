@@ -104,6 +104,9 @@ async def get_user(request):
     })
 
 
+
+
+
 async def set_games_name(request):
     if not request.user:
         return web.Response(status=401)

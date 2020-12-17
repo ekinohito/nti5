@@ -1,5 +1,5 @@
 from db_base import Session
-from models import User
+from models import User, Games
 
 
 class UserService:
