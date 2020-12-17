@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import tour from "../../../assets/logos/tour.svg"
-import {fetchGames} from "../../../actions";
+import {fetchGames, setAuthModalIsOpen, setNicknameModalIsOpen} from "../../../actions";
 import {useDispatch, useSelector} from "react-redux";
 
 const Content = () => {
@@ -33,31 +33,8 @@ const Content = () => {
                                 <div className="col text-right mt-md-0 mt-5">
 
                                     <button type="button" className="btn btn-danger main-item-description"
-                                            data-toggle="modal" data-target={`#${value.title}`}>Добавить аккаунт</button>
+                                            onClick={() => dispatch(setNicknameModalIsOpen(true))}>Добавить аккаунт</button>
 
-                                    <div className="modal fade" id={value.title} tabIndex="-1" role="dialog">
-                                        <div className="modal-dialog" role="document">
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <button type="button" className="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    <h4 className="modal-title" id="myModalLabel">Modal title</h4>
-                                                </div>
-                                                <div className="modal-body">
-                                                    ...
-                                                </div>
-                                                <div className="modal-footer">
-                                                    <button type="button" className="btn btn-secondary"
-                                                            data-dismiss="modal">Close
-                                                    </button>
-                                                    <button type="button" className="btn btn-primary">Save changes
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                         }
 

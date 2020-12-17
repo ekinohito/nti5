@@ -58,6 +58,8 @@ async def get_games(request):
     return utils.json_response(response_obj)
 
 
+
+
 async def register(request):
     data = await request.json()
 
