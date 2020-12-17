@@ -27,7 +27,7 @@ class User(Base):
     lol_nickname = Column(String)
     lol_account_id = Column(String)
     steam_id = Column(String)
-    fortnite_id = Column(String)
+    fortnite_nickname = Column(String)
     games = relationship(Games, back_populates="user", uselist=False)
 
     def __init__(self, username, password):
