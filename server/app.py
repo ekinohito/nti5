@@ -85,6 +85,10 @@ async def login(request):
         })
 
 
+async def get_user(request):
+    return utils.json_response(request.user)
+
+
 async def set_games_name(request):
     if not request.user:
         return web.Response(status=401)
@@ -107,6 +111,7 @@ def main():
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     # app.router.add_options('/games', options)
+    app.router.add_get('/user', get_user)
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
