@@ -55,7 +55,7 @@
         {
           "title": "total_matches_won",
           "mul": 0.3,
-          "method": "total_matches_won"
+          "method": "csgo.total_matches_won"
         }
       ]
     },

@@ -1,13 +1,23 @@
+import asyncio
+import json
+
+import aiohttp_cors
 from aiohttp import web
 import utils
 
 from db_base import Base, engine
 from methods import LeagueOfLegends
-from middlewares import auth_middleware, cors_middleware
+from middlewares import auth_middleware
 from services import UserService
 
 from dotenv import load_dotenv
+
+from server.tree.tree import TreeDecoder
+
 load_dotenv()
+
+with open('tree/tree.json') as f:
+    tree = json.load(f, cls=TreeDecoder)
 
 
 async def handle(request):
@@ -23,6 +33,7 @@ async def options(request):
 
 
 async def get_games(request):
+
     response_obj = [
             {
                 'title': "Dota 2",
@@ -34,13 +45,14 @@ async def get_games(request):
                 'title': "CS:GO",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
                 'points': "0.567",
-                'presented': True,
+                'presented': False,
             },
             {
                 'title': "Fortnite",
                 'description': "Компьютерная многопользовательская командная игра в жанре BR",
-                'points': "0.345",
-                'presented': False,
+                'points': await tree.desc[2].evaluate({"fortnite-name": "100"}),
+                'presented': True,
+                'auth': "/fortnite_auth"
             },
         ]
     return utils.json_response(response_obj)
@@ -107,7 +119,7 @@ async def set_games_name(request):
 def main():
     Base.metadata.create_all(bind=engine)
 
-    app = web.Application(middlewares=[auth_middleware, cors_middleware])
+    app = web.Application(middlewares=[auth_middleware])
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     # app.router.add_options('/games', options)
@@ -115,6 +127,10 @@ def main():
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
+
+    cors = aiohttp_cors.setup(app)
+    for route in app.router.routes():
+        cors.add(route)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 
