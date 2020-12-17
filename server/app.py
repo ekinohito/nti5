@@ -1,4 +1,3 @@
-import asyncio
 import json
 
 from aiohttp_middlewares import cors_middleware
@@ -40,28 +39,28 @@ async def get_games(request):
                 'description': "Cтратегическая кооперативная игра, в которой две команды из пяти могущественных чемпионов сражаются друг с другом, пытаясь уничтожить вражескую базу",
                 'points': "0.456",
                 'presented': bool(request.user.lol_account_id),
-                'auth': "/lol_auth"
+                'auth': "/games/lol/name"
             },
             {
                 'title': "CS:GO",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
                 'points': "0.567",
                 'presented': False,
-                'auth': "/csgo_auth"
+                'auth': "/games/steam/name"
             },
             {
                 'title': "Fortnite",
                 'description': "Компьютерная многопользовательская командная игра в жанре BR",
                 'points': await tree.desc[2].evaluate({"fortnite-name": "100"}),
                 'presented': True,
-                'auth': "/fortnite_auth"
+                'auth': "/games/fortnite/name"
             },
             {
                 'title': "Payday 2",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
                 'points': "0.567",
                 'presented': False,
-                'auth': "/pd2_auth"
+                'auth': "/games/steam/name"
             },
         ] if request.user else []
     return utils.json_response(response_obj)
@@ -130,48 +129,6 @@ async def set_games_name(request):
     return web.Response(status=200)
 
 
-async def csgo_auth(request):
-    if not request.user:
-        return web.Response(status=401)
-
-    data = request.json()
-
-    UserService.update_games(request.user.id, steam_id=data['steamid64'])
-    return web.Response(status=200)
-
-
-async def pd2_auth(request):
-    if not request.user:
-        return web.Response(status=401)
-
-    data = request.json()
-
-    UserService.update_games(request.user.id, steam_id=data['steamid64'])
-    return web.Response(status=200)
-
-
-async def lol_auth(request):
-    if not request.user:
-        return web.Response(status=401)
-
-    data = request.json()
-
-    UserService.update_games(request.user.id, lol_account_id=data['account_id'],
-                             lol_nickname=data['lol_nickname'])
-    return web.Response(status=200)
-
-
-async def fortnite_auth(request):
-    if not request.user:
-        return web.Response(status=401)
-
-    data = request.json()
-
-    UserService.update_games(request.user.id, fortnite_id=data['fortnite_id'])
-    return web.Response(status=200)
-
-
-
 def main():
     Base.metadata.create_all(bind=engine)
 
@@ -183,11 +140,6 @@ def main():
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
-
-    app.router.add_post('/csgo_auth', csgo_auth)
-    app.router.add_post('/pd2_auth', pd2_auth)
-    app.router.add_post('/lol_auth', lol_auth)
-    app.router.add_post('/fortnite_auth', fortnite_auth)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 

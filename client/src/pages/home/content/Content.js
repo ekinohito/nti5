@@ -36,7 +36,7 @@ const Content = () => {
                                             onClick={() => dispatch(setNicknameModalIsOpen(true))}>Добавить аккаунт</button>
 
                                 </div>
-                        }
+                        }   
 
                     </div>
                 ))

@@ -1,2 +1,3 @@
-from .user_model import User, Games
+from .user_model import User
+from .maximum_model import Maximum
 
