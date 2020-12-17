@@ -20,7 +20,7 @@ class UserService:
     def get_user(id: int = None, username: str = None) -> User:
         session = Session()
 
-        user: User
+        user: User = None
 
         if id:
             user = session.query(User).filter(User.id.is_(id)).first()
