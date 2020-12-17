@@ -12,6 +12,7 @@ class Games(Base):
     lol_account_id = Column(String)
 
     steam_id = Column(Integer)
+    fortnite_nickname = Column(String)
 
     user = relationship('User', back_populates="games", uselist=False)
 
@@ -21,6 +22,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
+
     lol_nickname = Column(String)
     lol_account_id = Column(String)
     steam_id = Column(String)
