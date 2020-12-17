@@ -67,8 +67,6 @@ async def get_games(request):
     return utils.json_response(response_obj)
 
 
-
-
 async def register(request):
     data = await request.json()
 
@@ -115,9 +113,6 @@ async def get_user(request):
     })
 
 
-
-
-
 async def set_games_name(request):
     if not request.user:
         return web.Response(status=401)
@@ -128,9 +123,11 @@ async def set_games_name(request):
     if game_name == 'lol':
         account_id = (await LeagueOfLegends().init(summoner_name=payload)).account_id
         UserService.update_games(request.user.id, lol_account_id=account_id, lol_nickname=payload)
-        return web.Response(status=200)
-    elif game_name == 'csgo':
+    elif game_name == 'steam':
         UserService.update_games(request.user.id, steam_id=payload)
+    elif game_name == 'fortnite':
+        UserService.update_games(request.user.id, fortnite_nickname=payload)
+    return web.Response(status=200)
 
 
 def main():
