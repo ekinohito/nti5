@@ -1,7 +1,10 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-import "./containers.scss";
+import styles from './containers.module.css';
+import {closeAllModals} from "../actions";
+import {useDispatch} from "react-redux";
+
 
 const style = {
     overlay: {
@@ -26,6 +29,10 @@ const style = {
 };
 
 const ModalPopup = ({isOpen, ...props}) => {
+    const width = props.width ?? 350;
+
+    const dispatch = useDispatch();
+
     return (
         <Modal
             isOpen={isOpen}
@@ -34,10 +41,14 @@ const ModalPopup = ({isOpen, ...props}) => {
         >
             <div className="container" style={{height: '100%'}}>
                 <div className="d-flex justify-content-center align-items-center" style={{height: '100%'}}>
-                    <div className="modal-lg flex-grow-1 flex-shrink-1">
+                    <div style={{width}} className={`${styles.modalBody} p-4 bg-light`}>
+                        <div className="d-flex justify-content-end">
+                            <button onClick={() => dispatch(closeAllModals())} className="btn btn-outline-danger">
+                                Закрыть
+                            </button>
+                        </div>
                         {props.children}
                     </div>
-
                 </div>
             </div>
 
