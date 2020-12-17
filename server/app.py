@@ -33,6 +33,12 @@ async def options(request):
 
 async def get_games(request):
 
+    user = dict()
+    if request.user.fortnite_nickname is not None:
+        user.update({"fortnite-name": request.user.fortnite_nickname})
+    if request.user.steam_id is not None:
+        user.update({"steamid64": request.user.request.user.steam_id})
+
     response_obj = [
             {
                 'title': "League of Legends ",
@@ -44,22 +50,22 @@ async def get_games(request):
             {
                 'title': "CS:GO",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
-                'points': "0.567",
-                'presented': False,
+                'points': await tree.desc[0].evaluate(user),
+                'presented': bool(request.user.steam_id),
                 'auth': "/games/steam/name"
             },
             {
                 'title': "Fortnite",
                 'description': "Компьютерная многопользовательская командная игра в жанре BR",
-                'points': await tree.desc[2].evaluate({"fortnite-name": "100"}),
-                'presented': True,
+                'points': await tree.desc[2].evaluate(user),
+                'presented': bool(request.user.fortnite_nickname),
                 'auth': "/games/fortnite/name"
             },
             {
                 'title': "Payday 2",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
-                'points': "0.567",
-                'presented': False,
+                'points': await tree.desc[0].evaluate(user),
+                'presented': bool(request.user.steam_id),
                 'auth': "/games/steam/name"
             },
         ] if request.user else []
