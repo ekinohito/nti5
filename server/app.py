@@ -38,7 +38,7 @@ async def get_games(request):
     if request.user.fortnite_nickname is not None:
         user.update({"fortnite-name": request.user.fortnite_nickname})
     if request.user.steam_id is not None:
-        user.update({"steamid64": request.user.request.user.steam_id})
+        user.update({"steamid64": request.user.user.steam_id})
 
     response_obj = [
             {
