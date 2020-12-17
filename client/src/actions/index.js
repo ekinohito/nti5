@@ -38,10 +38,8 @@ const setGames = games => {
     }
 }
 
-const API_URL = 'http://localhost:3010';
-
 export const fetchGames = () => dispatch => {
-    fetch(`${API_URL}/games`)
+    apiRequest('/games')
         .then(res => res.json())
         .then(data => dispatch(setGames(data)));
 }

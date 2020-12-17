@@ -3,7 +3,8 @@ import utils
 
 from db_base import Base, engine
 from methods import LeagueOfLegends
-from middlewares import auth_middleware, cors_middleware
+from middlewares import auth_middleware
+from aiohttp_middlewares import cors_middleware
 from services import UserService
 
 from dotenv import load_dotenv
@@ -86,7 +87,10 @@ async def login(request):
 
 
 async def get_user(request):
-    return utils.json_response(request.user)
+    print(request.user)
+    return utils.json_response({
+        'username': request.user.username,
+    })
 
 
 async def set_games_name(request):
@@ -107,7 +111,7 @@ async def set_games_name(request):
 def main():
     Base.metadata.create_all(bind=engine)
 
-    app = web.Application(middlewares=[auth_middleware, cors_middleware])
+    app = web.Application(middlewares=[cors_middleware(origins=['http://localhost:3000']), auth_middleware])
     app.router.add_get('/', handle)
     app.router.add_get('/games', get_games)
     # app.router.add_options('/games', options)

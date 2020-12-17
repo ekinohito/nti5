@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import ModalPopup from "../../../containers/ModalPopup";
 import {apiRequest} from "../../../http";
-import {setAuthModalIsOpen} from "../../../actions";
+import {fetchUser, setAuthModalIsOpen} from "../../../actions";
 
 const AuthModal = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const AuthModal = () => {
 
             <div className="form-group">
                 <span>Пароль</span>
-                <input type="text" className="form-control mt-2" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <input type="password" className="form-control mt-2" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
 
             <div className="form-group d-flex justify-content-between">
@@ -33,11 +33,25 @@ const AuthModal = () => {
                             .then(text => {
                                 localStorage.setItem("token", text);
                                 dispatch(setAuthModalIsOpen(false));
+                                dispatch(fetchUser());
                             })
                 }>
                     Войти
                 </button>
-                <button className="btn btn-outline-primary">Регистрация</button>
+                <button className="btn btn-outline-primary" onClick={
+                    () =>
+                        apiRequest("/user/register", 'POST', false, {
+                            username, password
+                        })
+                            .then(res => res.text())
+                            .then(text => {
+                                localStorage.setItem("token", text);
+                                dispatch(setAuthModalIsOpen(false));
+                                dispatch(fetchUser());
+                            })
+                }>
+                    Регистрация
+                </button>
             </div>
         </ModalPopup>
     );
