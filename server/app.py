@@ -130,6 +130,48 @@ async def set_games_name(request):
     return web.Response(status=200)
 
 
+async def csgo_auth(request):
+    if not request.user:
+        return web.Response(status=401)
+
+    data = request.json()
+
+    UserService.update_games(request.user.id, steam_id=data['steamid64'])
+    return web.Response(status=200)
+
+
+async def pd2_auth(request):
+    if not request.user:
+        return web.Response(status=401)
+
+    data = request.json()
+
+    UserService.update_games(request.user.id, steam_id=data['steamid64'])
+    return web.Response(status=200)
+
+
+async def lol_auth(request):
+    if not request.user:
+        return web.Response(status=401)
+
+    data = request.json()
+
+    UserService.update_games(request.user.id, lol_account_id=data['account_id'],
+                             lol_nickname=data['lol_nickname'])
+    return web.Response(status=200)
+
+
+async def fortnite_auth(request):
+    if not request.user:
+        return web.Response(status=401)
+
+    data = request.json()
+
+    UserService.update_games(request.user.id, fortnite_id=data['fortnite_id'])
+    return web.Response(status=200)
+
+
+
 def main():
     Base.metadata.create_all(bind=engine)
 
@@ -141,6 +183,11 @@ def main():
     app.router.add_post('/user/register', register)
     app.router.add_post('/user/login', login)
     app.router.add_post('/games/{game_name}/name', set_games_name)
+
+    app.router.add_post('/csgo_auth', csgo_auth)
+    app.router.add_post('/pd2_auth', pd2_auth)
+    app.router.add_post('/lol_auth', lol_auth)
+    app.router.add_post('/fortnite_auth', fortnite_auth)
 
     web.run_app(app, host='0.0.0.0', port=3010)
 
