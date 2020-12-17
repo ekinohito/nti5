@@ -32,6 +32,7 @@ async def options(request):
 
 
 async def get_games(request):
+    print(request.user)
 
     response_obj = [
             {
