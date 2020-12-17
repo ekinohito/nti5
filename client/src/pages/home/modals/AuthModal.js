@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import ModalPopup from "../../../containers/ModalPopup";
 import {apiRequest} from "../../../http";
-import {fetchUser, setAuthModalIsOpen} from "../../../actions";
+import {fetchGames, fetchUser, setAuthModalIsOpen} from "../../../actions";
 
 const AuthModal = () => {
     const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const AuthModal = () => {
                                 localStorage.setItem("token", text);
                                 dispatch(setAuthModalIsOpen(false));
                                 dispatch(fetchUser());
+                                dispatch(fetchGames());
                             })
                 }>
                     Войти
@@ -48,6 +49,7 @@ const AuthModal = () => {
                                 localStorage.setItem("token", text);
                                 dispatch(setAuthModalIsOpen(false));
                                 dispatch(fetchUser());
+                                dispatch(fetchGames());
                             })
                 }>
                     Регистрация

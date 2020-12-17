@@ -39,7 +39,7 @@ async def get_games(request):
                 'title': "League of Legends ",
                 'description': "Cтратегическая кооперативная игра, в которой две команды из пяти могущественных чемпионов сражаются друг с другом, пытаясь уничтожить вражескую базу",
                 'points': "0.456",
-                'presented': True,
+                'presented': bool(request.user.lol_account_id),
                 'auth': "/lol_auth"
             },
             {
@@ -63,7 +63,7 @@ async def get_games(request):
                 'presented': False,
                 'auth': "/pd2_auth"
             },
-        ]
+        ] if request.user else []
     return utils.json_response(response_obj)
 
 
