@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import ModalPopup from "../../../containers/ModalPopup";
 import {apiRequest} from "../../../http";
-import {closeAllModals} from "../../../actions";
+import {setAuthModalIsOpen} from "../../../actions";
 
 const AuthModal = () => {
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const AuthModal = () => {
                             .then(res => res.text())
                             .then(text => {
                                 localStorage.setItem("token", text);
-                                dispatch(closeAllModals());
+                                dispatch(setAuthModalIsOpen(false));
                             })
                 }>
                     Войти
