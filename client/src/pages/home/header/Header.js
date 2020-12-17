@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../../assets/logos/logo-onti.svg";
 import {useDispatch, useSelector} from "react-redux";
-import {setAuthModalIsOpen, setUser} from "../../../actions";
+import {setAuthModalIsOpen, setGames, setUser} from "../../../actions";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -20,7 +20,8 @@ const Header = () => {
                     :
                     <button className="btn btn-danger" onClick={() => {
                         localStorage.removeItem('token');
-                        dispatch(setUser(null))
+                        dispatch(setUser(null));
+                        dispatch(setGames([]));
                     }}>
                         Выйти
                     </button>

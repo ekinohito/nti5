@@ -9,7 +9,7 @@ export const apiRequest = (url, method='GET', authorized=false, body= null) => {
             'Content-Type': 'application/json',
         }
 
-    if (authorized)
+    if (authorized && localStorage.getItem('token'))
         headers = {
             ...headers,
             'Authorization': `Bearer ${localStorage.getItem('token')}`

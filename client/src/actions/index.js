@@ -47,7 +47,7 @@ export const fetchUser = () => dispatch => {
         .then(user => dispatch(setUser(user)))
 }
 
-const setGames = games => {
+export const setGames = games => {
     return {
         type: SET_GAMES,
         payload: games
