@@ -33,41 +33,41 @@ async def options(request):
 
 async def get_games(request):
     print(request.user)
+    print(request.user.fortnite_nickname)
 
-    user = dict()
-    if request.user.fortnite_nickname is not None:
-        user.update({"fortnite-name": request.user.fortnite_nickname})
-    if request.user.steam_id is not None:
-        user.update({"steamid64": request.user.request.user.steam_id})
+    user = {
+        "fortnite-name": request.user.fortnite_nickname,
+        "steamid64": request.user.steam_id
+    }
 
     response_obj = [
             {
                 'title': "League of Legends ",
                 'description': "Cтратегическая кооперативная игра, в которой две команды из пяти могущественных чемпионов сражаются друг с другом, пытаясь уничтожить вражескую базу",
                 'points': "0.456",
-                'presented': bool(request.user.lol_account_id),
-                'auth': "/games/lol/name"
+                'presented': bool(request.user.lol_account_id) if request.user.lol_account_id else 0,
+                'method': "/games/lol/name"
             },
             {
                 'title': "CS:GO",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
-                'points': await tree.desc[0].evaluate(user),
+                'points': await tree.desc[0].evaluate(user) if request.user.steam_id else 0,
                 'presented': bool(request.user.steam_id),
-                'auth': "/games/steam/name"
+                'method': "/games/steam/name"
             },
             {
                 'title': "Fortnite",
                 'description': "Компьютерная многопользовательская командная игра в жанре BR",
-                'points': await tree.desc[2].evaluate(user),
+                'points': await tree.desc[2].evaluate(user) if request.user.fortnite_nickname else 0,
                 'presented': bool(request.user.fortnite_nickname),
-                'auth': "/games/fortnite/name"
+                'method': "/games/fortnite/name"
             },
             {
                 'title': "Payday 2",
                 'description': "Компьютерная многопользовательская командная игра в жанре FPS",
-                'points': await tree.desc[0].evaluate(user),
+                'points': await tree.desc[0].evaluate(user) if request.user.steam_id else 0,
                 'presented': bool(request.user.steam_id),
-                'auth': "/games/steam/name"
+                'method': "/games/steam/name"
             },
         ] if request.user else []
     return utils.json_response(response_obj)

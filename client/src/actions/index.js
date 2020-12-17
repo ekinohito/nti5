@@ -4,6 +4,7 @@ export const SET_GAMES = 'SET_GAMES';
 export const CLOSE_ALL_MODALS = 'CLOSE_ALL_MODALS';
 export const SET_AUTH_MODAL_IS_OPEN = 'SET_AUTH_MODAL_IS_OPEN';
 export const SET_NICKNAME_MODAL_IS_OPEN = 'SET_NICKNAME_MODAL_IS_OPEN';
+export const SET_MODAL_METHOD = 'SET_MODAL_METHOD';
 export const SET_USER = 'SET_USER';
 
 export const closeAllModals = () => {
@@ -22,6 +23,13 @@ export const setNicknameModalIsOpen = (isOpen) => {
     return {
         type: SET_NICKNAME_MODAL_IS_OPEN,
         payload: isOpen
+    }
+}
+
+export const setModalMethod = method => {
+    return {
+        type: SET_MODAL_METHOD,
+        payload: method
     }
 }
 

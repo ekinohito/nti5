@@ -4,9 +4,11 @@ import ModalPopup from "../../../containers/ModalPopup";
 import {apiRequest} from "../../../http";
 import {fetchGames, setNicknameModalIsOpen} from "../../../actions";
 
-const NicknameModal = ({ method }) => {
+const NicknameModal = ( ) => {
     const dispatch = useDispatch();
     const isOpen = useSelector(state => state.nicknameModalIsOpen);
+    const method = useSelector(state => state.modalMethod);
+    console.log(method)
 
     const [username, setUsername] = useState('');
 
@@ -20,8 +22,8 @@ const NicknameModal = ({ method }) => {
             <div className="form-group d-flex justify-content-between">
                 <button className="btn btn-primary" onClick={
                     () =>
-                        apiRequest(method, 'POST', false, {
-                            username
+                        apiRequest(method, 'POST', true, {
+                            payload: username
                         })
                             .then(res => res.text())
                             .then(text => {

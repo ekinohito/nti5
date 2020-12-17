@@ -1,10 +1,18 @@
-import {CLOSE_ALL_MODALS, SET_AUTH_MODAL_IS_OPEN, SET_GAMES, SET_NICKNAME_MODAL_IS_OPEN, SET_USER} from "../actions";
+import {
+    CLOSE_ALL_MODALS,
+    SET_AUTH_MODAL_IS_OPEN,
+    SET_GAMES,
+    SET_MODAL_METHOD,
+    SET_NICKNAME_MODAL_IS_OPEN,
+    SET_USER
+} from "../actions";
 
 const initialState = {
     user: null,
     games: [],
     authModalIsOpen: false,
-    nicknameModalIsOpen: false
+    nicknameModalIsOpen: false,
+    modalMethod: ''
 }
 
 const rootReducer = (state=initialState, action) => {
@@ -34,6 +42,11 @@ const rootReducer = (state=initialState, action) => {
             return {
                 ...state,
                 user: action.payload
+            }
+        case SET_MODAL_METHOD:
+            return {
+                ...state,
+                modalMethod: action.payload
             }
         default:
             return state

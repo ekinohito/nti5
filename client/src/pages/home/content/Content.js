@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import tour from "../../../assets/logos/tour.svg"
-import {fetchGames, setAuthModalIsOpen, setNicknameModalIsOpen} from "../../../actions";
+import {fetchGames, setAuthModalIsOpen, setModalMethod, setNicknameModalIsOpen} from "../../../actions";
 import {useDispatch, useSelector} from "react-redux";
 
 const Content = () => {
@@ -10,7 +10,7 @@ const Content = () => {
         dispatch(fetchGames())
     }, [dispatch]);
 
-    const games = useSelector(state => state.games)
+    const games = useSelector(state => state.games);
 
     return (
         <div className="main-content p-3">
@@ -33,10 +33,16 @@ const Content = () => {
                                 <div className="col text-right mt-md-0 mt-5">
 
                                     <button type="button" className="btn btn-danger main-item-description"
-                                            onClick={() => dispatch(setNicknameModalIsOpen(true))}>Добавить аккаунт</button>
+                                            onClick={
+                                                () => {
+                                                    console.log(value)
+                                                    dispatch(setModalMethod(value.method))
+                                                    dispatch(setNicknameModalIsOpen(true));
+                                                }
+                                            }>Добавить аккаунт</button>
 
                                 </div>
-                        }   
+                        }
 
                     </div>
                 ))
